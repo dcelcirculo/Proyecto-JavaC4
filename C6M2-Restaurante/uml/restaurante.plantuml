@@ -1,0 +1,63 @@
+@startuml Restaurante
+
+class Restaurant {
+    String name
+    String address
+}
+
+class Table {
+    Integer tableNumber
+    Integer capacity
+    Boolean isOccupied
+}
+
+class MenuItem {
+    String name
+    Double price
+}
+
+class OrderItem {
+    Integer quantity
+}
+
+class Order {
+    Integer orderNumber
+}
+
+Enum OrderStatus {
+    PENDING
+    IN_PROGRESS
+    DELIVERED
+}
+
+Class Menu {
+    String name
+
+
+}
+
+class Employee {
+    String name
+    
+    Employee(String name)
+    String getName()
+}
+
+' Relaciones
+' Agregación: o-- Es opcional que exista una o la otra
+Restaurant "1" o-- "1..*" Table
+Restaurant "1" o-- "2..50" Employee
+
+' Asociación: -- conoce o utiliza otra clase
+Table "1" -- "0..*" Order
+MenuItem "1" -- "0..*" OrderItem
+Restaurant "1" -- "1" Menu
+
+' Composición: *-- Si no existe una, no existe la otra
+Menu "1" *-- "1" MenuItem : menuItem
+Order *-- OrderItem
+
+' Dependencia: --> Una necesidad obligatroria de tener un elemento de este tipo
+' Se usa principalmente para Enums. Es de dependencia
+Order --> OrderStatus
+@enduml
